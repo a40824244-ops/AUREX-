@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AnnouncementBar from './components/AnnouncementBar';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -19,10 +19,33 @@ import ConsultationModal from './components/ConsultationModal';
 import SearchModal from './components/SearchModal';
 
 import { PRODUCTS, ALL_COLLECTION_PRODUCTS, CURATED_DEALS, HERO_DEAL, TESTER_PRODUCTS } from './data/products';
+import { api } from './services/api';
 
 export default function App() {
   // Navigation State
   const [currentPage, setCurrentPage] = useState('home');
+  const [storeProducts, setStoreProducts] = useState(ALL_COLLECTION_PRODUCTS);
+  const newlyAddedProducts = storeProducts.filter(
+    (product) => !ALL_COLLECTION_PRODUCTS.some((bundled) => bundled.id === product.id),
+  );
+  const featuredProducts = [...PRODUCTS, ...newlyAddedProducts.slice(-4)];
+
+  useEffect(() => {
+    let isMounted = true;
+    api.getProducts()
+      .then((response) => {
+        if (!response.success || !Array.isArray(response.data)) {
+          throw new Error('The products service returned an invalid response.');
+        }
+        if (isMounted) setStoreProducts(response.data);
+      })
+      .catch((error) => {
+        console.warn('Could not load live products; showing the bundled catalog:', error.message);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Currency state (defaults to Pakistani Rupees - Rs)
   const [currency] = useState({ code: 'PKR', symbol: 'Rs. ', label: 'PKR (Rs)' });
@@ -124,6 +147,7 @@ export default function App() {
           {/* View Switcher */}
           {currentPage === 'collection' ? (
             <CollectionPage
+              products={storeProducts}
               currency={currency}
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}
@@ -154,8 +178,8 @@ export default function App() {
 
               {/* Product Collection Bento Grid */}
               <ProductCollection
-                products={PRODUCTS}
-                allProducts={ALL_COLLECTION_PRODUCTS}
+                products={featuredProducts}
+                allProducts={storeProducts}
                 currency={currency}
                 wishlist={wishlist}
                 onToggleWishlist={handleToggleWishlist}
@@ -232,7 +256,7 @@ export default function App() {
           <SearchModal
             isOpen={searchOpen}
             onClose={() => setSearchOpen(false)}
-            products={[...ALL_COLLECTION_PRODUCTS, ...TESTER_PRODUCTS, ...CURATED_DEALS, HERO_DEAL]}
+            products={[...storeProducts, ...TESTER_PRODUCTS, ...CURATED_DEALS, HERO_DEAL]}
             onSelectProduct={(p) => setQuickViewProduct(p)}
             currency={currency}
           />

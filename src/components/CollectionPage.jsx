@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { ALL_COLLECTION_PRODUCTS, TESTER_PRODUCTS } from '../data/products';
+import { TESTER_PRODUCTS } from '../data/products';
 
 export default function CollectionPage({
+  products = [],
   currency,
   wishlist,
   onToggleWishlist,
@@ -20,7 +21,10 @@ export default function CollectionPage({
     { id: 'Tester Vials', label: 'Tester Samples' }
   ];
 
-  const ALL_PRODUCTS_COMBINED = [...ALL_COLLECTION_PRODUCTS, ...TESTER_PRODUCTS];
+  const allProducts = useMemo(
+    () => [...products, ...TESTER_PRODUCTS],
+    [products],
+  );
 
   const formatPrice = (priceInUSD) => {
     const rates = {
@@ -36,8 +40,8 @@ export default function CollectionPage({
 
   const filteredAndSortedProducts = useMemo(() => {
     let list = selectedCategory === 'All'
-      ? [...ALL_PRODUCTS_COMBINED]
-      : ALL_PRODUCTS_COMBINED.filter(p => {
+      ? [...allProducts]
+      : allProducts.filter(p => {
           if (selectedCategory === 'Attar') return p.category === 'Attar';
           return p.category === selectedCategory;
         });
@@ -50,7 +54,7 @@ export default function CollectionPage({
       list.sort((a, b) => b.sillage - a.sillage);
     }
     return list;
-  }, [selectedCategory, sortBy]);
+  }, [allProducts, selectedCategory, sortBy]);
 
   return (
     <div className="bg-[#f9f9f7] text-[#1a1c1b] min-h-screen">
