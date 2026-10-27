@@ -162,7 +162,7 @@ export default function DealsPage({
               </div>
 
               <p className="font-sans text-[10px] uppercase tracking-widest text-[#7f7667]">
-                * Includes Certificate of Authenticity &amp; Free Express Delivery
+                * Includes Certificate of Authenticity
               </p>
             </div>
 
@@ -285,7 +285,7 @@ export default function DealsPage({
               PRIVATE VAULT NOTICE
             </span>
             <p className="font-sans text-xs sm:text-sm text-[#1a1c1b] font-light leading-relaxed">
-              Limited to 50 curated coffrets per batch. Complimentary express global transit and hand-numbered authenticity certificate included.
+              Limited to 50 curated coffrets per batch. Hand-numbered authenticity certificate included.
             </p>
             <div className="pt-2 flex justify-center items-center space-x-6 text-[#4e4639]">
               <span className="flex items-center space-x-1.5 font-sans text-[10px] uppercase tracking-widest">

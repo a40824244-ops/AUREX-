@@ -2,7 +2,7 @@
 
 React and Vite frontend for the AUREX luxury perfume store. The storefront
 connects to the hosted FastAPI backend at
-`https://aurexb-0099283a.fastapicloud.dev/api` by default.
+`https://aurexb-9ec42955.fastapicloud.dev/api` by default.
 
 ## Requirements
 
@@ -22,7 +22,7 @@ To use a different backend, set `VITE_API_BASE_URL` in a local `.env` file to
 the API base URL, including `/api`. Example:
 
 ```env
-VITE_API_BASE_URL=https://aurexb-0099283a.fastapicloud.dev/api
+VITE_API_BASE_URL=https://aurexb-9ec42955.fastapicloud.dev/api
 ```
 
 ## Build and lint
@@ -38,4 +38,4 @@ Deploy the generated `dist` directory using a static-site host. Set
 `VITE_API_BASE_URL` to the deployed API base URL when it differs from the
 default. The backend must allow the deployed site origin in its CORS settings.
 The API documentation is available at
-`https://aurexb-0099283a.fastapicloud.dev/docs`.
+`https://aurexb-9ec42955.fastapicloud.dev/docs`.

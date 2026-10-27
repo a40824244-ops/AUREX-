@@ -1,4 +1,4 @@
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'https://aurexb-0099283a.fastapicloud.dev/api').replace(/\/+$/, '');
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || 'https://aurexb-9ec42955.fastapicloud.dev/api').replace(/\/+$/, '');
 
 function adminHeaders(headers = {}) {
   const token = typeof localStorage === 'undefined'
